@@ -1,0 +1,46 @@
+# 编译产物
+*.o
+*.d
+*.i
+*.hex
+*.bin
+*.elf
+*.axf
+*.map
+*.lst
+*.iex
+*.crf
+*.bak
+*.tmp
+*.log
+
+# Keil 工程文件
+*.uvprojx
+*.uvoptx
+*.uvguix.*
+*.uvgui.*
+*.scvd
+*.ini
+*.dbgconf
+*.uv4.log
+JLinkLog.txt
+EventRecorderStub.*
+
+# 调试/仿真
+Debug/
+Listings/
+Objects/
+RTE/
+MDK-ARM/
+*.uvopt
+*.uvproj
+
+# IDE 配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 版本控制
+.git/
