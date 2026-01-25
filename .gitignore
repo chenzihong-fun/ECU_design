@@ -1,46 +1,55 @@
-# 编译产物
-*.o
+# Prerequisites
 *.d
-*.i
-*.hex
-*.bin
+
+# Object files
+*.o
+*.ko
+*.obj
 *.elf
-*.axf
+
+# Linker output
+*.ilk
 *.map
-*.lst
-*.iex
-*.crf
-*.bak
-*.tmp
-*.log
+*.exp
 
-# Keil 工程文件
-*.uvprojx
-*.uvoptx
-*.uvguix.*
-*.uvgui.*
-*.scvd
-*.ini
-*.dbgconf
-*.uv4.log
-JLinkLog.txt
-EventRecorderStub.*
+# Precompiled Headers
+*.gch
+*.pch
 
-# 调试/仿真
-Debug/
-Listings/
-Objects/
-RTE/
-MDK-ARM/
-*.uvopt
-*.uvproj
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
 
-# IDE 配置
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
 
-# 版本控制
-.git/
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# debug information files
+*.dwo
