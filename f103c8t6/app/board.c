@@ -1,5 +1,5 @@
 #include "stm32f10x.h"
-
+#include "board.h"
 
 void board_lowlevel_init(void)
 {
@@ -22,4 +22,9 @@ void board_lowlevel_init(void)
 
     RCC_LSEConfig(RCC_LSE_ON);
     while (RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET);
+}
+
+void board_init(void)
+{ 
+    
 }
