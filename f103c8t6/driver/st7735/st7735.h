@@ -63,6 +63,9 @@
 #define ST7735_WHITE   0xFFFF
 #define ST7735_COLOR565(r, g, b) (((r & 0xF8) << 8) | ((g & 0xFC) << 3) | ((b & 0xF8) >> 3))
 
+#define TEXT_COLOR ST7735_WHITE
+#define BACKGROUND_COLOR ST7735_BLACK
+
 
 void st7735_unselect(void);
 void st7735_init(void);

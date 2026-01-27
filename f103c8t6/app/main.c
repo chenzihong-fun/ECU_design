@@ -4,7 +4,7 @@
 int main(void)
 {
     board_lowlevel_init();
-    board_init();
+    device_init();
 
     while (1)
     {
