@@ -1,9 +1,8 @@
 #include "Beep.h"
 
 
-#define BEEP_PORT      BEEP_PORT
-#define BEEP_PIN       BEEP_PIN
-#define BEEP_CLK       RCC_APB2Periph_BEEP_PORT
+#define BEEP_PORT      GPIOB
+#define BEEP_PIN       GPIO_Pin_15
 
 /**
   * @brief  初始化蜂鸣器引脚

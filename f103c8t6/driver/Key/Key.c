@@ -67,32 +67,47 @@ void key_set_callback(key_desc_t* key, key_callback_t callback)
 }
 
 //key1 ----- key4的外部中断处理函数
-//key1 --- PB0
-//key2 --- PB12
+//key1 --- PB5
+//key2 --- PB6
+//key3 --- PB7
+//key4 --- PB8
 
-// 原有中断处理函数保持不变
-
-void EXTI1_IRQHandler(void)  // PB1对应的中断处理函数
+// PB5-PB8都属于EXTI_Line5-9，共享EXTI9_5_IRQHandler中断处理函数
+void EXTI9_5_IRQHandler(void)  // PB5-PB8对应的中断处理函数
 {
-    if (EXTI_GetITStatus(EXTI_Line1) != RESET)
+    if (EXTI_GetITStatus(EXTI_Line5) != RESET)  // key1 - PB5
     {
-        EXTI_ClearITPendingBit(EXTI_Line1);
+        EXTI_ClearITPendingBit(EXTI_Line5);
         if (key_callback)
         {
-            key_callback();
+            key_callback();  // 可扩展为传递按键ID参数
         }
     }
-}
-
-// 添加PB12对应的中断处理函数
-void EXTI15_10_IRQHandler(void)
-{
-    if (EXTI_GetITStatus(EXTI_Line12) != RESET)
+    
+    if (EXTI_GetITStatus(EXTI_Line6) != RESET)  // key2 - PB6
     {
-        EXTI_ClearITPendingBit(EXTI_Line12);
+        EXTI_ClearITPendingBit(EXTI_Line6);
         if (key_callback)
         {
-            key_callback();
+            key_callback();  // 可扩展为传递按键ID参数
+        }
+    }
+    
+    if (EXTI_GetITStatus(EXTI_Line7) != RESET)  // key3 - PB7
+    {
+        EXTI_ClearITPendingBit(EXTI_Line7);
+        if (key_callback)
+        {
+            key_callback();  // 可扩展为传递按键ID参数
+        }
+    }
+    
+    if (EXTI_GetITStatus(EXTI_Line8) != RESET)  // key4 - PB8
+    {
+        EXTI_ClearITPendingBit(EXTI_Line8);
+        if (key_callback)
+        {
+            key_callback();  // 可扩展为传递按键ID参数
         }
     }
 }

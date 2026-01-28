@@ -2,44 +2,44 @@
 #include "board.h"
 
 
-// PB1按键配置
+// PB5按键配置 (key1)
 key_desc_t *key_1 = {
     .port = GPIOB,
-    .pin = GPIO_Pin_1,
+    .pin = GPIO_Pin_5,
     .exti_port = GPIO_PortSourceGPIOB,
-    .exti_pinsource = GPIO_PinSource1,
-    .exti_line = EXTI_Line1,
-    .exti_irq = EXTI1_IRQn
+    .exti_pinsource = GPIO_PinSource5,
+    .exti_line = EXTI_Line5,
+    .exti_irq = EXTI9_5_IRQn  // STM32F103中EXTI5-9共享一个中断向量
 };
 
-// PB12按键配置
+// PB6按键配置 (key2)
 key_desc_t *key_2 = {
     .port = GPIOB,
-    .pin = GPIO_Pin_12,
+    .pin = GPIO_Pin_6,
     .exti_port = GPIO_PortSourceGPIOB,
-    .exti_pinsource = GPIO_PinSource12,
-    .exti_line = EXTI_Line12,
-    .exti_irq = EXTI15_10_IRQn  // STM32F103中EXTI10-15共享一个中断向量
+    .exti_pinsource = GPIO_PinSource6,
+    .exti_line = EXTI_Line6,
+    .exti_irq = EXTI9_5_IRQn  // STM32F103中EXTI5-9共享一个中断向量
 };
 
-
+// PB7按键配置 (key3)
 key_desc_t *key_3 = {
     .port = GPIOB,
-    .pin = GPIO_Pin_1,
+    .pin = GPIO_Pin_7,
     .exti_port = GPIO_PortSourceGPIOB,
-    .exti_pinsource = GPIO_PinSource1,
-    .exti_line = EXTI_Line1,
-    .exti_irq = EXTI1_IRQn
+    .exti_pinsource = GPIO_PinSource7,
+    .exti_line = EXTI_Line7,
+    .exti_irq = EXTI9_5_IRQn  // STM32F103中EXTI5-9共享一个中断向量
 };
 
-// PB12按键配置
-key_desc_t * key_4 = {
+// PB8按键配置 (key4)
+key_desc_t *key_4 = {
     .port = GPIOB,
-    .pin = GPIO_Pin_12,
+    .pin = GPIO_Pin_8,
     .exti_port = GPIO_PortSourceGPIOB,
-    .exti_pinsource = GPIO_PinSource12,
-    .exti_line = EXTI_Line12,
-    .exti_irq = EXTI15_10_IRQn  // STM32F103中EXTI10-15共享一个中断向量
+    .exti_pinsource = GPIO_PinSource8,
+    .exti_line = EXTI_Line8,
+    .exti_irq = EXTI9_5_IRQn  // STM32F103中EXTI5-9共享一个中断向量
 };
 void board_lowlevel_init(void)
 {

@@ -12,10 +12,10 @@
 #define CS_PIN      GPIO_Pin_4
 #define DC_PORT     GPIOB
 #define DC_PIN      GPIO_Pin_1
-#define RES_PORT    GPIOB
+#define RES_PORT    GPIOA
 #define RES_PIN     GPIO_Pin_0
-#define BLK_PORT    GPIOB
-#define BLK_PIN     GPIO_Pin_10
+#define BLK_PORT    GPIOA
+#define BLK_PIN     GPIO_Pin_1
 
 #define GRAM_BUFFER_SIZE 4096
 
