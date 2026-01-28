@@ -66,33 +66,4 @@ void key_set_callback(key_desc_t* key, key_callback_t callback)
     key_callback = callback ;
 }
 
-//key1 ----- key4的外部中断处理函数
-//key1 --- PB0
-//key2 --- PB12
 
-// 原有中断处理函数保持不变
-
-void EXTI1_IRQHandler(void)  // PB1对应的中断处理函数
-{
-    if (EXTI_GetITStatus(EXTI_Line1) != RESET)
-    {
-        EXTI_ClearITPendingBit(EXTI_Line1);
-        if (key_callback)
-        {
-            key_callback();
-        }
-    }
-}
-
-// 添加PB12对应的中断处理函数
-void EXTI15_10_IRQHandler(void)
-{
-    if (EXTI_GetITStatus(EXTI_Line12) != RESET)
-    {
-        EXTI_ClearITPendingBit(EXTI_Line12);
-        if (key_callback)
-        {
-            key_callback();
-        }
-    }
-}
