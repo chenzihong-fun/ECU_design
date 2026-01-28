@@ -7,6 +7,10 @@
 
 static lcd_spi_send_finish_callback_t lcd_spi_send_finish_callback;
 
+#define SCK_PORT  GPIOA
+#define SCK_PIN  GPIO_Pin_5
+#define MOSI_PORT  GPIOA
+#define MOSI_PIN  GPIO_Pin_7
 
 static void lcd_spi_gpio_init(void)
 {
@@ -15,14 +19,14 @@ static void lcd_spi_gpio_init(void)
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_Init(GPIOA, &GPIO_InitStructure);  // SPI1_SCK
-    GPIO_WriteBit(GPIOA, GPIO_Pin_5, Bit_SET);
+    GPIO_Init(SCK_PORT, &GPIO_InitStructure);  // SPI1_SCK
+    GPIO_WriteBit(SCK_PORT, SCK_PIN, Bit_SET);
 
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_Init(GPIOA, &GPIO_InitStructure);  // SPI1_MOSI
-    GPIO_WriteBit(GPIOA, GPIO_Pin_7, Bit_SET);
+    GPIO_Init(MOSI_PORT, &GPIO_InitStructure);  // SPI1_MOSI
+    GPIO_WriteBit(MOSI_PORT, MOSI_PIN, Bit_SET);
 }
 
 static void lcd_spi_nvic_init(void)
