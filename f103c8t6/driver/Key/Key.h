@@ -7,5 +7,6 @@ void key_init(key_desc_t* key);
 void key_wait_released(key_desc_t* key);
 bool key_pressed(key_desc_t* key);
 bool key_long_pressed(key_desc_t *key);
+void key_set_callback(key_callback_t callback);
 
 #endif /* __KEY_H__ */
