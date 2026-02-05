@@ -10,7 +10,7 @@ motor_ctrl_t g_motor_ctrl = {
 // 全局按键事件实例
 key_event_t g_key_event = {
     .event_type = KEY_EVT_NONE,
-    .processed = 1
+    .need_to_processed = 0
 };
 
 // 电机速度占空比表
@@ -85,7 +85,7 @@ static void handle_speed_down_event(void)
 void handle_key_events(void)
 {
     // 检查是否有未处理的按键事件
-    if(!g_key_event.processed) {
+    if(!g_key_event.need_to_processed) {
         switch(g_key_event.event_type) {
             case KEY_EVT_START_STOP:
                 handle_start_stop_event();
@@ -108,7 +108,7 @@ void handle_key_events(void)
         }
         
         // 标记事件已处理
-        g_key_event.processed = 1;
+        g_key_event.need_to_processed = 0;
     }
 }
 
@@ -125,7 +125,7 @@ void update_motor_output(void)
         } else {
             // 反转，使用反转速度数组
             target_duty = sg90_back_speed[g_motor_ctrl.speed_level - 1];
-        }
+        }   
     } else {
         // 电机停止状态下，设置占空比为中间值（停止状态）
         target_duty = 375; // 中间值，具体数值取决于您的舵机

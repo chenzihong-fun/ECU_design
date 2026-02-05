@@ -22,7 +22,8 @@ void  HCSR04_test()
 
 void SG90_test()
 {
-
+    mentor_control_init ();
+    mentor_control();
 }
 
 void mpu6050_test()

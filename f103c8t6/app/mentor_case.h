@@ -39,7 +39,7 @@ typedef struct {
 // 按键事件结构体
 typedef struct {
     volatile key_event_type_t event_type;  // 按键事件类型
-    volatile uint8_t processed;            // 事件是否已处理
+    volatile uint8_t need_to_processed;            // 事件是否已处理
 } key_event_t;
 
 // 电机控制实例
