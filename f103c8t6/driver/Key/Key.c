@@ -61,7 +61,7 @@ bool key_pressed(key_desc_t* key)
 }
 
 
-void key_set_callback(key_desc_t* key, key_callback_t callback)
+void key_set_callback(key_callback_t callback)
 {
     key_callback = callback ;
 }
