@@ -3,6 +3,8 @@
 
 #include "key_desc.h"
 
+typedef void (*key_callback_t)();
+
 void key_init(key_desc_t* key);
 void key_wait_released(key_desc_t* key);
 bool key_pressed(key_desc_t* key);

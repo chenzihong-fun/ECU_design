@@ -9,7 +9,7 @@
         "weather.h": "c",
         "stfonts.h": "c",
         "st7735.h": "c",
-        "esp_at.h": "c",
         "stimage.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

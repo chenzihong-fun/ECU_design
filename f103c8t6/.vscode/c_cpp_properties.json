@@ -3,20 +3,21 @@
         {
             "name": "stm32",
             "includePath": [
-                "app",
-                "driver",
+                "app/**",
+                "driver/**",
                 "driver/mpu6050",
                 "driver/st7735",
-                "driver/esp-at",
+                "firmware/**",
                 "firmware/cmsis/core",
                 "firmware/cmsis/device",
-                "firmware/driver/inc"
+                "firmware/driver/inc",
+                "third_lib/**"
             ],
             "defines": [
                 "USE_STDPERIPH_DRIVER",
                 "STM32F10X_MD"
             ],
-            "compilerPath": "C:/Users/YXC/Documents/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-gcc.exe",
+            "compilerPath": "\"C:\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\bin\\arm-none-eabi-gcc.exe\"",
             "intelliSenseMode": "windows-gcc-arm",
             "cStandard": "c99",
             "cppStandard": "c++11",
