@@ -3,7 +3,7 @@
 
 #include "stm32f10x.h"
 
-void HCSR04_Init(void);
+void HCSR04_init(void);
 float HCSR04_MeasureDistance(void);
 
 #endif /* __HCSR_04_H__ */

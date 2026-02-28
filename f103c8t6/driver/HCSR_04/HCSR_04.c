@@ -5,6 +5,8 @@
 //捕获到了才进入中断
 //注意在使用rtos的时候避免频繁进入中断，否则可能会导致系统卡死
 
+#define SOUND_SPEED 340u
+
 // 定义GPIO端口和引脚
 #define TRIG_PORT GPIOA
 #define TRIG_PIN GPIO_Pin_12
@@ -102,7 +104,7 @@ static void HCSR04_TIM_Init(void)
  * @param  无
  * @retval 无
  */
-void HCSR04_Init(void)
+void HCSR04_init(void)
 {
     HCSR04_NVIC_Init();
     HCSR04_GPIO_Init();
@@ -118,7 +120,7 @@ static void HCSR04_SendTrigger(void)
 {
     // 发送至少10us的高电平脉冲
     GPIO_SetBits(TRIG_PORT, TRIG_PIN);
-    tim_delay_us(15);  // 发送15us脉冲
+    timer_delay_us(15);  // 发送15us脉冲
     GPIO_ResetBits(TRIG_PORT, TRIG_PIN);
 }
 
@@ -138,7 +140,7 @@ void TIM1_CC_IRQHandler(void)
         {
             // 第一个上升沿，记录开始时间
             g_echo_start_time = TIM_GetCapture1(ECHO_TIM);
-            
+
             // 切换为下降沿捕获
             TIM_OC1PolarityConfig(ECHO_TIM, TIM_ICPolarity_Falling);
             capture_state = 1;
@@ -147,11 +149,11 @@ void TIM1_CC_IRQHandler(void)
         {
             // 下降沿，记录结束时间
             g_echo_end_time = TIM_GetCapture1(ECHO_TIM);
-            
+
             // 切换为上升沿捕获
             TIM_OC1PolarityConfig(ECHO_TIM, TIM_ICPolarity_Rising);
             capture_state = 0;
-            
+
             // 标记捕获完成
             g_capture_complete = 1;
         }
@@ -170,20 +172,20 @@ float HCSR04_MeasureDistance(void)
 {
     uint32_t pulse_width = 0;
     float distance = 0.0f;
-    
+
     // 重置捕获状态
     g_capture_complete = 0;
-    
+
     // 发送Trigger脉冲
     HCSR04_SendTrigger();
-    
+
     // 等待捕获完成，超时时间100ms
     uint32_t timeout = 100000;  // 100ms超时（100000 * 1us）
     while (!g_capture_complete && timeout--)
     {
-        tim_delay_us(1);
+        timer_delay_us(1);
     }
-    
+
     if (g_capture_complete)
     {
         // 计算脉冲宽度
@@ -196,12 +198,12 @@ float HCSR04_MeasureDistance(void)
             // 处理计数器溢出
             pulse_width = 0xFFFF - g_echo_start_time + g_echo_end_time + 1;
         }
-        
+
         // 计算距离：距离 = (声波速度 * 时间) / 2
         // 时间单位：us，转换为s需要除以1e6
         // 距离单位：cm
         distance = (float)(SOUND_SPEED * pulse_width) / (2 * 10000);
     }
-    
+
     return distance;
 }

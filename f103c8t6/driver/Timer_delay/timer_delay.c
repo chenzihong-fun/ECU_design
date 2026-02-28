@@ -28,7 +28,7 @@ void timer_tim2_init_us(void)
 }
 
 
-void tim_delay_us(uint32_t us)
+void timer_delay_us(uint32_t us)
 {
     if (us == 0)
         return;
@@ -52,11 +52,11 @@ void tim_delay_us(uint32_t us)
  * @param  ms: 需要延时的毫秒数
  * @retval 无
  */
-void tim_delay_ms(uint32_t ms)
+void timer_delay_ms(uint32_t ms)
 {
     while (ms--)
     {
-        tim_delay_us(1000);  // 调用1000次微秒延时函数
+        timer_delay_us(1000);  // 调用1000次微秒延时函数
     }
 }
 

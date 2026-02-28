@@ -2,6 +2,7 @@
 #define __KEY_H__
 
 #include "key_desc.h"
+#include "stdbool.h"
 
 typedef void (*key_callback_t)();
 

@@ -2,10 +2,10 @@
 #include <stdint.h>
 #include <string.h>
 #include "stm32f10x.h"
-#include "main.h"
 #include "lcd_spi.h"
 #include "st7735.h"
 #include "stfonts.h"
+#include "timer_delay.h"
 
 
 #define CS_PORT     GPIOA
@@ -135,9 +135,9 @@ void st7735_unselect(void)
 static void st7735_reset(void)
 {
     GPIO_WriteBit(RES_PORT, RES_PIN, Bit_RESET);
-    delay_ms(2);
+    timer_delay_ms(2);
     GPIO_WriteBit(RES_PORT, RES_PIN, Bit_SET);
-    delay_ms(150);
+    timer_delay_ms(150);
 }
 
 static void st7735_bl_on(void)
@@ -175,7 +175,7 @@ static void st7735_exec_cmds(const uint8_t *cmd_list)
             if (num == CMD_EOF)
                 break;
             else
-                delay_ms(num * 10);
+                timer_delay_ms(num * 10);
         }
         else
         {

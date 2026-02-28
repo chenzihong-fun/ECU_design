@@ -7,8 +7,6 @@
 #define PWM_TIM                      TIM3
 #define PWM_CHANNEL                  TIM_OC3Init
 
-uint16_t SG90_FRONT_SPEED[4] = {SG90_FRONT_SPEED1_DUTY, SG90_FRONT_SPEED2_DUTY, SG90_FRONT_SPEED3_DUTY, SG90_FRONT_SPEED4_DUTY};
-uint16_t SG90_BACK_SPEED[4] = {SG90_BACK_SPEED1_DUTY, SG90_BACK_SPEED2_DUTY, SG90_BACK_SPEED3_DUTY, SG90_BACK_SPEED4_DUTY};
 
 static void SG90_GPIO_init(void)
 {
@@ -36,7 +34,7 @@ static void SG90_TIMER_PWM_init(void)
     // 初始化TIM3通道3为PWM模式1
     TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
     TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-    TIM_OCInitStructure.TIM_Pulse = SG90_STOP_PULSE;  // 初始状态：停止
+    TIM_OCInitStructure.TIM_Pulse = SG90_STOP_DUTY;  // 初始状态：停止
     TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
     PWM_CHANNEL(PWM_TIM, &TIM_OCInitStructure);
     

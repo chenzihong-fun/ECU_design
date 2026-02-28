@@ -3,7 +3,7 @@
 
 
 // PB1按键配置
-key_desc_t *key_1 = {
+key_desc_t key_struct_1 = {
     .port = GPIOB,
     .pin = GPIO_Pin_1,
     .exti_port = GPIO_PortSourceGPIOB,
@@ -13,7 +13,7 @@ key_desc_t *key_1 = {
 };
 
 // PB12按键配置
-key_desc_t *key_2 = {
+key_desc_t key_struct_2 = {
     .port = GPIOB,
     .pin = GPIO_Pin_12,
     .exti_port = GPIO_PortSourceGPIOB,
@@ -23,7 +23,7 @@ key_desc_t *key_2 = {
 };
 
 
-key_desc_t *key_3 = {
+key_desc_t key_struct_3 = {
     .port = GPIOB,
     .pin = GPIO_Pin_1,
     .exti_port = GPIO_PortSourceGPIOB,
@@ -33,7 +33,7 @@ key_desc_t *key_3 = {
 };
 
 // PB12按键配置
-key_desc_t * key_4 = {
+key_desc_t key_struct_4 = {
     .port = GPIOB,
     .pin = GPIO_Pin_12,
     .exti_port = GPIO_PortSourceGPIOB,
@@ -41,6 +41,12 @@ key_desc_t * key_4 = {
     .exti_line = EXTI_Line12,
     .exti_irq = EXTI15_10_IRQn  // STM32F103中EXTI10-15共享一个中断向量
 };
+
+key_desc_t * key_1 = &key_struct_1;
+key_desc_t * key_2 = &key_struct_2;
+key_desc_t * key_3 = &key_struct_3;
+key_desc_t * key_4 = &key_struct_4;
+
 void board_lowlevel_init(void)
 {
     // 使能GPIOA、GPIOB、GPIOC、GPIOD、GPIOE时钟
@@ -76,7 +82,7 @@ void board_lowlevel_init(void)
 }
 
 void device_init(void)
-{ 
+{
     led_init();
     key_init(key_1);
     key_init(key_2);

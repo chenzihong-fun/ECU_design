@@ -2,6 +2,7 @@
 #include "key.h"
 #include "key_desc.h"
 #include "stdbool.h"
+#include "timer_delay.h"
 
 #define KEY_LONG_PRESS_TIME_MS 2000
 

@@ -1,9 +1,9 @@
 #include "Beep.h"
+#include "stm32f10x.h"
 
 
-#define BEEP_PORT      BEEP_PORT
-#define BEEP_PIN       BEEP_PIN
-#define BEEP_CLK       RCC_APB2Periph_BEEP_PORT
+#define BEEP_PORT      GPIOB
+#define BEEP_PIN       GPIO_Pin_15
 
 /**
   * @brief  初始化蜂鸣器引脚
@@ -13,13 +13,13 @@
 void beep_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
-    
+
     // 配置PB15为推挽输出
     GPIO_InitStructure.GPIO_Pin = BEEP_PIN;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(BEEP_PORT, &GPIO_InitStructure);
-    
+
     // 初始状态为低电平，蜂鸣器不响
     GPIO_ResetBits(BEEP_PORT, BEEP_PIN);
 }

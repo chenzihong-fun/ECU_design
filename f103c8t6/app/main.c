@@ -1,14 +1,15 @@
 #include "board.h"
 
+extern void test_all();
 
 int main(void)
 {
     board_lowlevel_init();
     device_init();
-    key_set_callback(key_callback);
 
     while (1)
     {
+        test_all();
         // Main loop
     }
 }
