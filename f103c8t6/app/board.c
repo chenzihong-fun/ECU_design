@@ -86,6 +86,7 @@ void board_lowlevel_init(void)
 void device_init(void)
 {
     led_init();
+    delay_init();
     key_init(key_1);
     key_init(key_2);
     key_init(key_3);

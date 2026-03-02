@@ -3,6 +3,8 @@
 
 
 #include <stdint.h>
+#include "sys.h"
+#include "delay.h"
 #include "led.h"
 #include "key.h"
 #include "key_desc.h"
@@ -14,6 +16,10 @@
 #include "HCSR_04.h"
 #include "motor_control.h"
 #include "hall.h"
+#include "mpu6050.h"
+#include "inv_mpu.h"
+#include "inv_mpu_dmp_motion_driver.h"
+
 
 extern key_desc_t * key_1;
 extern key_desc_t * key_2;
