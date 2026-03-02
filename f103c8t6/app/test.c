@@ -1,5 +1,6 @@
 #include "board.h"
 #include "motor_control.h"
+#include "hall.h"
 #include <stdio.h>
 
 void  HCSR04_test()
@@ -36,7 +37,9 @@ void mpu6050_test()
 
 void hall_test()
 {
-
+    char rpm_str[20];
+    sprintf(rpm_str, "rpm: %u", hall_rpm);
+    st7735_write_string(16, 0, rpm_str, &font_ascii_8x16, TEXT_COLOR, BACKGROUND_COLOR);
 }
 
 void test_all()

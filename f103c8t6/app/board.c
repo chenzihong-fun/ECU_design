@@ -66,6 +66,8 @@ void board_lowlevel_init(void)
     // 使能定时器2、3时钟
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+    // 使能TIM5时钟
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE);
     // 使能TIM1和AFIO时钟
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1 | RCC_APB2Periph_AFIO, ENABLE);
     // 使能DMA1时钟
@@ -92,5 +94,8 @@ void device_init(void)
     timer_tim2_init_us(); //72MHz / 72 = 1MHz = 1us
     HCSR04_init();
     st7735_init();
+    hall_init();
+    hall_timer_init();
+
 }
 

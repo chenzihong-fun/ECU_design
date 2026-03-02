@@ -13,6 +13,7 @@
 #include "st7735.h"
 #include "HCSR_04.h"
 #include "motor_control.h"
+#include "hall.h"
 
 extern key_desc_t * key_1;
 extern key_desc_t * key_2;
