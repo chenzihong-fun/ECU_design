@@ -22,7 +22,7 @@ void  HCSR04_test()
 
 void SG90_test()
 {
-    motor_init ();
+    motor_init();
     motor_control();
 	char speed_level[20];
 	sprintf(speed_level, "speed: %u", g_motor_ctrl.speed_level);
