@@ -12,10 +12,10 @@
 #define CS_PIN      GPIO_Pin_4
 #define DC_PORT     GPIOB
 #define DC_PIN      GPIO_Pin_1
-#define RES_PORT    GPIOB
+#define RES_PORT    GPIOA
 #define RES_PIN     GPIO_Pin_0
-#define BLK_PORT    GPIOB
-#define BLK_PIN     GPIO_Pin_10
+#define BLK_PORT    GPIOA
+#define BLK_PIN     GPIO_Pin_1
 
 #define GRAM_BUFFER_SIZE 4096
 
@@ -245,6 +245,7 @@ void st7735_init()
     st7735_unselect();
 
     st7735_bl_on();
+	st7735_fill_screen(ST7735_BLACK);
 }
 
 void st7735_draw_pixel(uint16_t x, uint16_t y, uint16_t color)
@@ -411,4 +412,25 @@ void st7735_draw_image(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const uin
     st7735_set_window(x, y, x + w - 1, y + h - 1);
     st7735_write_data((uint8_t *)data, w * h * 2);
     st7735_unselect();
+}
+
+/**
+ * @brief 清屏函数
+ * @param color 填充颜色
+ */
+void st7735_clear_screen(uint16_t color)
+{
+    st7735_fill_screen(color);
+}
+
+/**
+ * @brief 清行函数
+ * @param line 行号（从0开始）
+ * @param font_height 字体高度
+ * @param color 填充颜色
+ */
+void st7735_clear_line(uint16_t line, uint16_t font_height, uint16_t color)
+{
+    uint16_t y = line * font_height;
+    st7735_fill_rect(0, y, ST7735_WIDTH, font_height, color);
 }

@@ -11,7 +11,7 @@
 static void SG90_GPIO_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
-    
+
     // 配置PB0为复用推挽输出
     GPIO_InitStructure.GPIO_Pin = PWM_PIN;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  // 复用推挽输出
@@ -23,27 +23,30 @@ static void SG90_TIMER_PWM_init(void)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
     TIM_OCInitTypeDef TIM_OCInitStructure;
-    
+
     // 初始化TIM3时间基准
     TIM_TimeBaseStructure.TIM_Period = SG90_ARR;  // 周期20ms
     TIM_TimeBaseStructure.TIM_Prescaler = 72-1;  // 预分频器，72MHz/72=1MHz计数频率
     TIM_TimeBaseStructure.TIM_ClockDivision = 0;
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
     TIM_TimeBaseInit(PWM_TIM, &TIM_TimeBaseStructure);
-    
+
     // 初始化TIM3通道3为PWM模式1
     TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
     TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
     TIM_OCInitStructure.TIM_Pulse = SG90_STOP_DUTY;  // 初始状态：停止
     TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
     PWM_CHANNEL(PWM_TIM, &TIM_OCInitStructure);
-    
+
     // 启动TIM3的预装载寄存器
     TIM_OC3PreloadConfig(PWM_TIM, TIM_OCPreload_Enable);
-    
+
     // 启动TIM3的自动重装载预装载寄存器
     TIM_ARRPreloadConfig(PWM_TIM, ENABLE);
-    
+
+    // 使能 TIM3 通道 3 的输出
+    TIM_CtrlPWMOutputs(TIM3, ENABLE);
+
     // 启动TIM3
     TIM_Cmd(PWM_TIM, ENABLE);
 }

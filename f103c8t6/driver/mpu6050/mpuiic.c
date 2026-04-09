@@ -1,70 +1,71 @@
 #include "mpuiic.h"
 #include "timer_delay.h"
-//////////////////////////////////////////////////////////////////////////////////	 
-//±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
-//ALIENTEK¾«Ó¢STM32¿ª·¢°åV3
-//MPU6050 IICÇý¶¯ ´úÂë	   
-//ÕýµãÔ­×Ó@ALIENTEK
-//¼¼ÊõÂÛÌ³:www.openedv.com
-//´´½¨ÈÕÆÚ:2015/1/17
-//°æ±¾£ºV1.0
-//°æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
-//Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2009-2019
-//All rights reserved									  
+#include  "delay.h"
 //////////////////////////////////////////////////////////////////////////////////
- 
-  //MPU IIC ÑÓÊ±º¯Êý
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ñ§Ï°Ê¹ï¿½Ã£ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½Í¾
+//ALIENTEKï¿½ï¿½Ó¢STM32ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½V3
+//MPU6050 IICï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½@ALIENTEK
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì³:www.openedv.com
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:2015/1/17
+//ï¿½æ±¾ï¿½ï¿½V1.0
+//ï¿½ï¿½È¨ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½
+//Copyright(C) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿Æ¼ï¿½ï¿½ï¿½ï¿½Þ¹ï¿½Ë¾ 2009-2019
+//All rights reserved
+//////////////////////////////////////////////////////////////////////////////////
+
+  //MPU IIC ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
 void MPU_IIC_Delay(void)
 {
-	delay_us(2);
+	delay_us(5);
 }
 
-//³õÊ¼»¯IIC
+//ï¿½ï¿½Ê¼ï¿½ï¿½IIC
 void MPU_IIC_Init(void)
-{					     
+{
   GPIO_InitTypeDef  GPIO_InitStructure;
-	
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);//ÏÈÊ¹ÄÜÍâÉèIO PORTBÊ±ÖÓ 
-		
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10|GPIO_Pin_11;	 // ¶Ë¿ÚÅäÖÃ
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //ÍÆÍìÊä³ö
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;		 //IO¿ÚËÙ¶ÈÎª50MHz
-  GPIO_Init(GPIOB, &GPIO_InitStructure);					 //¸ù¾ÝÉè¶¨²ÎÊý³õÊ¼»¯GPIO 
-	
-  GPIO_SetBits(GPIOB,GPIO_Pin_10|GPIO_Pin_11);						 //PB10,PB11 Êä³ö¸ß	
- 
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);//ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IO PORTBÊ±ï¿½ï¿½
+
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10|GPIO_Pin_11;	 // ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½ï¿½
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;		 //IOï¿½ï¿½ï¿½Ù¶ï¿½Îª50MHz
+  GPIO_Init(GPIOB, &GPIO_InitStructure);					 //ï¿½ï¿½ï¿½ï¿½ï¿½è¶¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½GPIO
+
+  GPIO_SetBits(GPIOB,GPIO_Pin_10|GPIO_Pin_11);						 //PB10,PB11 ï¿½ï¿½ï¿½ï¿½ï¿½
+
 }
-//²úÉúIICÆðÊ¼ÐÅºÅ
+//ï¿½ï¿½ï¿½ï¿½IICï¿½ï¿½Ê¼ï¿½Åºï¿½
 void MPU_IIC_Start(void)
 {
-	MPU_SDA_OUT();     //sdaÏßÊä³ö
-	MPU_IIC_SDA=1;	  	  
+	MPU_SDA_OUT();     //sdaï¿½ï¿½ï¿½ï¿½ï¿½
+	MPU_IIC_SDA=1;
 	MPU_IIC_SCL=1;
 	MPU_IIC_Delay();
- 	MPU_IIC_SDA=0;//START:when CLK is high,DATA change form high to low 
+ 	MPU_IIC_SDA=0;//START:when CLK is high,DATA change form high to low
 	MPU_IIC_Delay();
-	MPU_IIC_SCL=0;//Ç¯×¡I2C×ÜÏß£¬×¼±¸·¢ËÍ»ò½ÓÊÕÊý¾Ý 
-}	  
-//²úÉúIICÍ£Ö¹ÐÅºÅ
+	MPU_IIC_SCL=0;//Ç¯×¡I2Cï¿½ï¿½ï¿½ß£ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+}
+//ï¿½ï¿½ï¿½ï¿½IICÍ£Ö¹ï¿½Åºï¿½
 void MPU_IIC_Stop(void)
 {
-	MPU_SDA_OUT();//sdaÏßÊä³ö
+	MPU_SDA_OUT();//sdaï¿½ï¿½ï¿½ï¿½ï¿½
 	MPU_IIC_SCL=0;
 	MPU_IIC_SDA=0;//STOP:when CLK is high DATA change form low to high
  	MPU_IIC_Delay();
-	MPU_IIC_SCL=1; 
-	MPU_IIC_SDA=1;//·¢ËÍI2C×ÜÏß½áÊøÐÅºÅ
-	MPU_IIC_Delay();							   	
+	MPU_IIC_SCL=1;
+	MPU_IIC_SDA=1;//ï¿½ï¿½ï¿½ï¿½I2Cï¿½ï¿½ï¿½ß½ï¿½ï¿½ï¿½ï¿½Åºï¿½
+	MPU_IIC_Delay();
 }
-//µÈ´ýÓ¦´ðÐÅºÅµ½À´
-//·µ»ØÖµ£º1£¬½ÓÊÕÓ¦´ðÊ§°Ü
-//        0£¬½ÓÊÕÓ¦´ð³É¹¦
+//ï¿½È´ï¿½Ó¦ï¿½ï¿½ï¿½ÅºÅµï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Ê§ï¿½ï¿½
+//        0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½É¹ï¿½
 u8 MPU_IIC_Wait_Ack(void)
 {
 	u8 ucErrTime=0;
-	MPU_SDA_IN();      //SDAÉèÖÃÎªÊäÈë  
-	MPU_IIC_SDA=1;MPU_IIC_Delay();	   
-	MPU_IIC_SCL=1;MPU_IIC_Delay();	 
+	MPU_SDA_IN();      //SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
+	MPU_IIC_SDA=1;MPU_IIC_Delay();
+	MPU_IIC_SCL=1;MPU_IIC_Delay();
 	while(MPU_READ_SDA)
 	{
 		ucErrTime++;
@@ -74,10 +75,10 @@ u8 MPU_IIC_Wait_Ack(void)
 			return 1;
 		}
 	}
-	MPU_IIC_SCL=0;//Ê±ÖÓÊä³ö0 	   
-	return 0;  
-} 
-//²úÉúACKÓ¦´ð
+	MPU_IIC_SCL=0;//Ê±ï¿½ï¿½ï¿½ï¿½ï¿½0
+	return 0;
+}
+//ï¿½ï¿½ï¿½ï¿½ACKÓ¦ï¿½ï¿½
 void MPU_IIC_Ack(void)
 {
 	MPU_IIC_SCL=0;
@@ -88,7 +89,7 @@ void MPU_IIC_Ack(void)
 	MPU_IIC_Delay();
 	MPU_IIC_SCL=0;
 }
-//²»²úÉúACKÓ¦´ð		    
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ACKÓ¦ï¿½ï¿½
 void MPU_IIC_NAck(void)
 {
 	MPU_IIC_SCL=0;
@@ -98,44 +99,44 @@ void MPU_IIC_NAck(void)
 	MPU_IIC_SCL=1;
 	MPU_IIC_Delay();
 	MPU_IIC_SCL=0;
-}					 				     
-//IIC·¢ËÍÒ»¸ö×Ö½Ú
-//·µ»Ø´Ó»úÓÐÎÞÓ¦´ð
-//1£¬ÓÐÓ¦´ð
-//0£¬ÎÞÓ¦´ð			  
+}
+//IICï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö½ï¿½
+//ï¿½ï¿½ï¿½Ø´Ó»ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
+//1ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
+//0ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
 void MPU_IIC_Send_Byte(u8 txd)
-{                        
-    u8 t;   
-	MPU_SDA_OUT(); 	    
-    MPU_IIC_SCL=0;//À­µÍÊ±ÖÓ¿ªÊ¼Êý¾Ý´«Êä
+{
+    u8 t;
+	MPU_SDA_OUT();
+    MPU_IIC_SCL=0;//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ó¿ï¿½Ê¼ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½
     for(t=0;t<8;t++)
-    {              
-        MPU_IIC_SDA=(txd&0x80)>>7;//ÌáÈ¡·¢ËÍÊý¾ÝµÄµÚÒ»Î»£¬È»ºóÒÆÎ»µ½×îµÍÎ»£¬·¢ËÍ³öÈ¥
-        txd<<=1; //½ÓÏÂÀ´½«Òª·¢ËÍµÄÊý¾ÝµÄµÚ¶þÎ»ÒÆµ½µÚÒ»Î»£¬×¼±¸ÏÂÒ»¸öÑ­»·	  
+    {
+        MPU_IIC_SDA=(txd&0x80)>>7;//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÝµÄµï¿½Ò»Î»ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½È¥
+        txd<<=1; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ÝµÄµÚ¶ï¿½Î»ï¿½Æµï¿½ï¿½ï¿½Ò»Î»ï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ñ­ï¿½ï¿½
 		    MPU_IIC_SCL=1;
-		    MPU_IIC_Delay(); 
-		    MPU_IIC_SCL=0;	
 		    MPU_IIC_Delay();
-    }	 
-} 	    
-//¶Á1¸ö×Ö½Ú£¬ack=1Ê±£¬·¢ËÍACK£¬ack=0£¬·¢ËÍnACK   
+		    MPU_IIC_SCL=0;
+		    MPU_IIC_Delay();
+    }
+}
+//ï¿½ï¿½1ï¿½ï¿½ï¿½Ö½Ú£ï¿½ack=1Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ACKï¿½ï¿½ack=0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nACK
 u8 MPU_IIC_Read_Byte(unsigned char ack)
 {
 	unsigned char i,receive=0;
-	MPU_SDA_IN();//SDAÉèÖÃÎªÊäÈë
+	MPU_SDA_IN();//SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
     for(i=0;i<8;i++ )
 	{
-        MPU_IIC_SCL=0; 
+        MPU_IIC_SCL=0;
         MPU_IIC_Delay();
 		MPU_IIC_SCL=1;
         receive<<=1;
-        if(MPU_READ_SDA)receive++;   
-		MPU_IIC_Delay(); 
-    }					 
+        if(MPU_READ_SDA)receive++;
+		MPU_IIC_Delay();
+    }
     if (!ack)
-        MPU_IIC_NAck();//·¢ËÍnACK
+        MPU_IIC_NAck();//ï¿½ï¿½ï¿½ï¿½nACK
     else
-        MPU_IIC_Ack(); //·¢ËÍACK   
+        MPU_IIC_Ack(); //ï¿½ï¿½ï¿½ï¿½ACK
     return receive;
 }
 

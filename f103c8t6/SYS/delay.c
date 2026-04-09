@@ -1,8 +1,9 @@
 #include "delay.h"
-
+#include "FreeRTOS.h"					//FreeRTOS使用
+#include "task.h"
+#include "sys.h"
 // 全局变量
 static uint32_t g_fac_us = 0;  // 微秒延时系数
-static uint32_t g_fac_ms = 0;  // 毫秒延时系数
 
 /**
  * @brief  初始化SysTick定时器
@@ -16,10 +17,12 @@ void delay_init(void)
 
     // 计算延时系数
     g_fac_us = SystemCoreClock / 1000000;  // 每微秒的计数次数
-    g_fac_ms = g_fac_us * 1000;  // 每毫秒的计数次数
 
     // 配置SysTick定时器
     SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK);  // 使用HCLK作为时钟源
+    SysTick->LOAD = 0xFFFFFF;  // 设置最大LOAD值
+    SysTick->VAL = 0;          // 清零计数器
+    SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;  // 启动SysTick
 }
 
 /**
@@ -29,11 +32,11 @@ void delay_init(void)
  */
 void delay_us(uint32_t us)
 {
-    uint32_t start = SysTick->VAL;
     uint32_t ticks = us * g_fac_us;
+    uint32_t start = SysTick->VAL;
 
-    // 等待指定的时间
-    while ((SysTick->VAL - start) < ticks)
+    // 等待指定的时间（考虑向下计数和溢出）
+    while ((start - SysTick->VAL) < ticks)
     {
         // 空循环
     }
@@ -51,3 +54,11 @@ void delay_ms(uint32_t ms)
         delay_us(1000);  // 1毫秒 = 1000微秒
     }
 }
+
+// void SysTick_Handler(void)
+// {
+//     if(xTaskGetSchedulerState()!=taskSCHEDULER_NOT_STARTED)//系统已经运行
+//     {
+//         xPortSysTickHandler();
+//     }
+// }

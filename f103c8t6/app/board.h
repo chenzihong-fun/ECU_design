@@ -1,7 +1,7 @@
 #ifndef __BOARD_H
 #define __BOARD_H
 
-
+#include <stdio.h>
 #include <stdint.h>
 #include "sys.h"
 #include "delay.h"
@@ -19,6 +19,8 @@
 #include "mpu6050.h"
 #include "inv_mpu.h"
 #include "inv_mpu_dmp_motion_driver.h"
+#include "console_usart1.h"
+#include "delay.h"
 
 
 extern key_desc_t * key_1;

@@ -1,4 +1,5 @@
 #include "motor_control.h"
+#include "board.h"
 
 #define MOTOR_SPEED_LEVELS 6    // 电机速度等级数
 #define MOTOR_DEFAULT_SPEED 1   // 默认速度等级
@@ -35,6 +36,8 @@ void motor_init(void)
     g_key_event.need_to_processed = 0;
 }
 
+
+
 static void motor_start_stop_toggle(void)
 {
     // 切换电机状态
@@ -58,30 +61,38 @@ static void motor_start_stop_toggle(void)
 // 电机方向切换
 static void motor_direction_toggle(void)
 {
-    g_motor_ctrl.direction = (g_motor_ctrl.direction == MOTOR_DIR_FORWARD) ? MOTOR_DIR_REVERSE : MOTOR_DIR_FORWARD;
+    g_motor_ctrl.direction = (g_motor_ctrl.direction == MOTOR_DIR_FORWARD) ? MOTOR_DIR_BACK : MOTOR_DIR_FORWARD;
     // 更新占空比
     if(g_motor_ctrl.direction == MOTOR_DIR_FORWARD && g_motor_ctrl.state == MOTOR_STATE_RUN)
     {
+        g_motor_ctrl.speed_level = MOTOR_DEFAULT_SPEED; // 切换方向时默认回到1档
         TIM_SetCompare3(TIM3, sg90_front_speed[g_motor_ctrl.speed_level]);
+    }
+    else if(g_motor_ctrl.direction == MOTOR_DIR_BACK && g_motor_ctrl.state == MOTOR_STATE_RUN)
+    {
+        g_motor_ctrl.speed_level = MOTOR_DEFAULT_SPEED; // 切换方向时默认回到1档
+        TIM_SetCompare3(TIM3, sg90_back_speed[g_motor_ctrl.speed_level]);
     }
     else
     {
-        TIM_SetCompare3(TIM3, sg90_back_speed[g_motor_ctrl.speed_level]);
+        // 停止状态切换方向时保持stop
+        g_motor_ctrl.speed_level = 0;
+        TIM_SetCompare3(TIM3, sg90_front_speed[g_motor_ctrl.speed_level]);
     }
 }
 
 // 电机加速
 static void motor_speed_up(void)
 {
-    if(g_motor_ctrl.speed_level < 5) // 假设最大速度等级为5
+    if(g_motor_ctrl.speed_level < 5 && g_motor_ctrl.state == MOTOR_STATE_RUN) // 假设最大速度等级为5
     {
         g_motor_ctrl.speed_level++;
         // 更新占空比
-        if(g_motor_ctrl.direction == MOTOR_DIR_FORWARD)
+        if(g_motor_ctrl.direction == MOTOR_DIR_FORWARD )
         {
             TIM_SetCompare3(TIM3, sg90_front_speed[g_motor_ctrl.speed_level]);
         }
-        else
+        else if(g_motor_ctrl.direction == MOTOR_DIR_BACK)
         {
             TIM_SetCompare3(TIM3, sg90_back_speed[g_motor_ctrl.speed_level]);
         }
@@ -95,11 +106,11 @@ static void motor_speed_down(void)
     {
         g_motor_ctrl.speed_level--;
         // 更新占空比
-        if(g_motor_ctrl.direction == MOTOR_DIR_FORWARD && g_motor_ctrl.state == MOTOR_STATE_RUN)
+        if(g_motor_ctrl.direction == MOTOR_DIR_FORWARD )
         {
             TIM_SetCompare3(TIM3, sg90_front_speed[g_motor_ctrl.speed_level]);
         }
-        else
+        else if(g_motor_ctrl.direction == MOTOR_DIR_BACK)
         {
             TIM_SetCompare3(TIM3, sg90_back_speed[g_motor_ctrl.speed_level]);
         }
@@ -172,24 +183,28 @@ void EXTI9_5_IRQHandler(void)
     if (EXTI_GetITStatus(EXTI_Line5) != RESET)  // key1 - PB5
     {
         EXTI_ClearITPendingBit(EXTI_Line5);
+        led_toggle();
         f_key_callback_flag_handler(EXTI_Line5);
     }
 
     if (EXTI_GetITStatus(EXTI_Line6) != RESET)  // key2 - PB6
     {
         EXTI_ClearITPendingBit(EXTI_Line6);
+        led_toggle();
         f_key_callback_flag_handler(EXTI_Line6);
     }
 
     if (EXTI_GetITStatus(EXTI_Line7) != RESET)  // key3 - PB7
     {
         EXTI_ClearITPendingBit(EXTI_Line7);
+        led_toggle();
         f_key_callback_flag_handler(EXTI_Line7);
     }
 
     if (EXTI_GetITStatus(EXTI_Line8) != RESET)  // key4 - PB8
     {
         EXTI_ClearITPendingBit(EXTI_Line8);
+        led_toggle();
         f_key_callback_flag_handler(EXTI_Line8);
     }
 }

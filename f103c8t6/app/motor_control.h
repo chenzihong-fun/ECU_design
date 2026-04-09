@@ -12,7 +12,7 @@ typedef enum {
 
 typedef enum{
     MOTOR_DIR_FORWARD = 0,
-    MOTOR_DIR_REVERSE = 1
+    MOTOR_DIR_BACK = 1
 } motor_dir_t;
 
  typedef struct{

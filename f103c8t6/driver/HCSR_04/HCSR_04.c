@@ -1,5 +1,6 @@
 #include "HCSR_04.h"
 #include "timer_delay.h"
+#include <stdlib.h>
 
 
 //捕获到了才进入中断
@@ -22,6 +23,13 @@
 static uint16_t g_echo_start_time = 0;
 static uint16_t g_echo_end_time = 0;
 static uint8_t g_capture_complete = 0;
+
+static int compare_float(const void *a, const void *b)
+{
+    float fa = *(const float*)a;
+    float fb = *(const float*)b;
+    return (fa > fb) - (fa < fb);
+}
 
 /**
  * @brief  配置HCSR04的NVIC中断
@@ -168,10 +176,10 @@ void TIM1_CC_IRQHandler(void)
  * @param  无
  * @retval 距离值(cm)，返回0表示测量失败
  */
-float HCSR04_MeasureDistance(void)
+static float HCSR04_MeasureSingle(void)
 {
     uint32_t pulse_width = 0;
-    float distance = 0.0f;
+    float distance = -1.0f;
 
     // 重置捕获状态
     g_capture_complete = 0;
@@ -179,8 +187,8 @@ float HCSR04_MeasureDistance(void)
     // 发送Trigger脉冲
     HCSR04_SendTrigger();
 
-    // 等待捕获完成，超时时间100ms
-    uint32_t timeout = 100000;  // 100ms超时（100000 * 1us）
+    // 等待捕获完成，超时时间50ms
+    uint32_t timeout = 50000;
     while (!g_capture_complete && timeout--)
     {
         timer_delay_us(1);
@@ -189,7 +197,7 @@ float HCSR04_MeasureDistance(void)
     if (g_capture_complete)
     {
         // 计算脉冲宽度
-        if (g_echo_end_time > g_echo_start_time)
+        if (g_echo_end_time >= g_echo_start_time)
         {
             pulse_width = g_echo_end_time - g_echo_start_time;
         }
@@ -199,11 +207,66 @@ float HCSR04_MeasureDistance(void)
             pulse_width = 0xFFFF - g_echo_start_time + g_echo_end_time + 1;
         }
 
-        // 计算距离：距离 = (声波速度 * 时间) / 2
-        // 时间单位：us，转换为s需要除以1e6
-        // 距离单位：cm
-        distance = (float)(SOUND_SPEED * pulse_width) / (2 * 10000);
+        // 计算距离：距离 = (声速 m/s * 时间 us) / 2 / 10000
+        // 340 * pulse_width / 20000 = pulse_width / 58.82
+        // 简化公式：distance = pulse_width / 58.8
+        if (pulse_width > 0)
+        {
+            distance = (float)pulse_width / 58.8f;
+        }
     }
 
     return distance;
+}
+
+float HCSR04_MeasureDistanceFiltered(void)
+{
+    #define SAMPLE_COUNT 5
+    float samples[SAMPLE_COUNT];
+    float valid_samples[SAMPLE_COUNT];
+    int valid_count = 0;
+    float result = 0.0f;
+
+    // 1. 连续采样
+    for (int i = 0; i < SAMPLE_COUNT; i++)
+    {
+        float dist = HCSR04_MeasureSingle();
+
+        // 2. 剔除异常值：有效范围 2cm - 400cm
+        if (dist >= 2.0f && dist <= 400.0f)
+        {
+            valid_samples[valid_count++] = dist;
+        }
+
+        // 采样间隔，避免余波干扰
+        timer_delay_ms(5);
+    }
+
+    // 3. 如果没有有效数据，返回0
+    if (valid_count == 0)
+    {
+        return 0.0f;
+    }
+
+    // 4. 中值滤波
+    if (valid_count >= 3)
+    {
+        // 排序
+        qsort(valid_samples, valid_count, sizeof(float), compare_float);
+
+        // 取中值
+        result = valid_samples[valid_count / 2];
+    }
+    else
+    {
+        // 数据太少，取平均值
+        float sum = 0.0f;
+        for (int i = 0; i < valid_count; i++)
+        {
+            sum += valid_samples[i];
+        }
+        result = sum / valid_count;
+    }
+
+    return result;
 }

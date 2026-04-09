@@ -17,14 +17,15 @@ void timer_tim2_init_us(void)
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
     TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
 
-    TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-
-    NVIC_InitTypeDef NVIC_InitStructure;
-    NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 5;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&NVIC_InitStructure);
+//  中断暂时用不上
+//  TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+//
+//  NVIC_InitTypeDef NVIC_InitStructure;
+//  NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
+//  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 5;
+//  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+//  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+//  NVIC_Init(&NVIC_InitStructure);
 }
 
 
@@ -32,19 +33,19 @@ void timer_delay_us(uint32_t us)
 {
     if (us == 0)
         return;
-    
+
     // 清零计数器
     TIM_SetCounter(TIM2, 0);
-    
+
     // 启动定时器
     TIM_Cmd(TIM2, ENABLE);
-    
+
     // 等待计数器达到指定值
     while (TIM_GetCounter(TIM2) < us);
-    
+
     // 关闭定时器
     TIM_Cmd(TIM2, DISABLE);
-    
+
 }
 
 /**
@@ -65,14 +66,14 @@ void timer_elapsed_register(timer_elapsed_callback_t callback)
     timer_elapsed_callback = callback;
 }
 
-void TIM2_IRQHandler(void)
-{
-    if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
-    {
-        TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-        if (timer_elapsed_callback)
-        {
-            timer_elapsed_callback();
-        }
-    }
-}
+//void TIM2_IRQHandler(void)
+//{
+//    if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
+//    {
+//        TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+//        if (timer_elapsed_callback)
+//        {
+//            timer_elapsed_callback();
+//        }
+//    }
+//}

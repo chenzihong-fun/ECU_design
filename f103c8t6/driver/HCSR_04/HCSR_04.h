@@ -5,5 +5,6 @@
 
 void HCSR04_init(void);
 float HCSR04_MeasureDistance(void);
+float HCSR04_MeasureDistanceFiltered(void);
 
 #endif /* __HCSR_04_H__ */

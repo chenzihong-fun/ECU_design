@@ -20,8 +20,8 @@ void beep_init(void)
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(BEEP_PORT, &GPIO_InitStructure);
 
-    // 初始状态为低电平，蜂鸣器不响
-    GPIO_ResetBits(BEEP_PORT, BEEP_PIN);
+    // 初始状态为高电平，蜂鸣器不响
+    GPIO_SetBits(BEEP_PORT, BEEP_PIN);
 }
 
 /**
@@ -31,7 +31,7 @@ void beep_init(void)
   */
 void beep_start(void)
 {
-    GPIO_SetBits(BEEP_PORT, BEEP_PIN);
+    GPIO_ResetBits(BEEP_PORT, BEEP_PIN);
 }
 
 /**
@@ -41,5 +41,5 @@ void beep_start(void)
   */
 void beep_stop(void)
 {
-    GPIO_ResetBits(BEEP_PORT, BEEP_PIN);
+    GPIO_SetBits(BEEP_PORT, BEEP_PIN);
 }

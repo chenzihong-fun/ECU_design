@@ -1,6 +1,6 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.1.1 Chrome/132.0.6834.210 Electron/34.3.3 Safari/537.36" version="26.1.1">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.0.3 Chrome/140.0.7339.249 Electron/38.7.0 Safari/537.36" version="29.0.3">
   <diagram name="第 1 页" id="7i7THQQR0S0ca2DyA4H7">
-    <mxGraphModel dx="794" dy="780" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1094" dy="759" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -61,18 +61,7 @@
           <mxGeometry x="490" y="555" width="80" height="30" as="geometry" />
         </mxCell>
         <mxCell id="CblQ1qDP8VYqBdolCz0A-28" value="&amp;nbsp;舵机/电机" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
-          <mxGeometry x="335" y="640" width="80" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="CblQ1qDP8VYqBdolCz0A-30" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.203;exitY=0.997;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="CblQ1qDP8VYqBdolCz0A-1" target="CblQ1qDP8VYqBdolCz0A-28" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="355" y="600" as="sourcePoint" />
-            <mxPoint x="405" y="550" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="CblQ1qDP8VYqBdolCz0A-31" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;PWM&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="CblQ1qDP8VYqBdolCz0A-30" vertex="1" connectable="0">
-          <mxGeometry x="0.0139" relative="1" as="geometry">
-            <mxPoint x="22" y="-1" as="offset" />
-          </mxGeometry>
+          <mxGeometry x="334" y="640" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="M0-g21Lf_G0kitEvAsP1-1" value="" style="endArrow=none;html=1;rounded=0;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -157,6 +146,12 @@
         </mxCell>
         <mxCell id="M0-g21Lf_G0kitEvAsP1-26" value="均用非通讯io" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="245" y="380" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PHdmWKJeahPQTpsepMv3-3" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.338;exitY=1.002;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="CblQ1qDP8VYqBdolCz0A-1" target="CblQ1qDP8VYqBdolCz0A-28">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="590" as="sourcePoint" />
+            <mxPoint x="440" y="540" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
